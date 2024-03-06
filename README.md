@@ -37,7 +37,5 @@ Setting this up is fairly complex.  Please read [DOCS.md](./tesla_http_proxy/DOC
 
  - Return to the 'Tesla HTTP Proxy add-on' page. Click 'Shutdown Flask Server'. This will do as it says. From now on the proxy server will continue to run in the docker contianer and listen for requests
 
- - 
-
- - 
- - 
+ - Test using curl. Setup Home Assistant to work with the proxy. Note the API access_token will expire after approx 8 hours if not refreshed. Setup Home Assistant to ensure the token is refreshed automatically. See [DOCS.md](./tesla_http_proxy/DOCS.md) for details (TODO)
+   
