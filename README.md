@@ -1,8 +1,8 @@
 # Tesla HTTP Proxy Docker
 
-Fork of https://github.com/llamafilm/tesla-http-proxy-addon
+Originally this was a fork of https://github.com/llamafilm/tesla-http-proxy-addon. All credit to llamafilm (https://github.com/llamafilm) for developing most of this. 
 
-Provides a standalone docker version instead of Home Assistant Add-on. This means it can work with versions of Home Assistant which don't allow Add-Ons (e.g. docker version).
+Provides a standalone docker version instead of a Home Assistant Add-on. This means it can work with versions of Home Assistant which don't allow Add-Ons (e.g. docker version).
 
 Work in progress it doesn't work yet :)
 
