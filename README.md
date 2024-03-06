@@ -1,6 +1,6 @@
 # Tesla HTTP Proxy Docker
 
-Work in progress it doesn't work yet :)
+Work in progress. It works to the extent of registering all the various keypairs and loading the private key into your vehicle. I can send commands via curl command line to open the boot, etc. I'm waiting for the pull requests (which is live at the time of writing) to integrate llamafilm's proxy into Home Assistant. Once this is done I will make whatever updates are required to my project, and tidy up the documentation. Feel free to try it out in the meantime
 
 Originally this was a fork of https://github.com/llamafilm/tesla-http-proxy-addon. All credit to llamafilm (https://github.com/llamafilm) for developing most of this. 
 
