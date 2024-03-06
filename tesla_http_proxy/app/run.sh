@@ -24,17 +24,16 @@ generate_keypair() {
   openssl req -x509 -nodes -newkey ec \
       -pkeyopt ec_paramgen_curve:secp521r1 \
       -pkeyopt ec_param_enc:named_curve  \
-      -subj "/CN=${HOSTNAME}" \
+      -subj "/CN=${PROXY_HOST}" \
       -keyout /data/key.pem -out /data/cert.pem -sha256 -days 3650 \
       -addext "extendedKeyUsage = serverAuth" \
       -addext "keyUsage = digitalSignature, keyCertSign, keyAgreement"
-  mkdir -p /share/tesla
-  cp /data/cert.pem /share/tesla/selfsigned.pem
+  cp /data/cert.pem /share/selfsigned.pem
 
   # Generate keypair
   echo "Generating keypair"
-  /root/go/bin/tesla-keygen -f -keyring-type pass -key-name myself create > /share/tesla/com.tesla.3p.public-key.pem
-  cat /share/tesla/com.tesla.3p.public-key.pem
+  /root/go/bin/tesla-keygen -f -keyring-type pass -key-name myself create > /share/com.tesla.3p.public-key.pem
+  cat /share/com.tesla.3p.public-key.pem
 }
 
 # run on first launch only
@@ -48,8 +47,8 @@ if ! pass > /dev/null 2>&1; then
   generate_keypair
 
 # verify certificate is not from previous install
-elif [ -f /share/tesla/com.tesla.3p.public-key.pem ] && [ -f /share/tesla/selfsigned.pem ]; then
-  certPubKey="$(openssl x509 -noout -pubkey -in /share/tesla/selfsigned.pem)"
+elif [ -f /share/com.tesla.3p.public-key.pem ] && [ -f /share/selfsigned.pem ]; then
+  certPubKey="$(openssl x509 -noout -pubkey -in /share/selfsigned.pem)"
   keyPubKey="$(openssl pkey -pubout -in /data/key.pem)"
   if [ "${certPubKey}" == "${keyPubKey}" ]; then
     echo "Found existing keypair"
