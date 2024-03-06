@@ -13,8 +13,10 @@ Runs a temporary Flask web server to handle initial Tesla authorization flow and
 
 Setting this up is fairly complex.  Please read [DOCS.md](./tesla_http_proxy/DOCS.md) for details (TODO), or follow the high level summary below:
 
-Clone the repository onto your host machine
+## Installation and set up
 
-Build the docker image using the Dockerfile. Alternatively you can get the image directly from Dockerhub https://hub.docker.com/r/iainbullock/tesla_http_proxy
+ - Clone the repository onto your host machine
 
-Deploy the docker stack using docker-compose.yml
+ - Build the docker image using the Dockerfile. Alternatively you can get the image directly from Dockerhub https://hub.docker.com/r/iainbullock/tesla_http_proxy
+
+ - Deploy the docker stack using docker-compose.yml
