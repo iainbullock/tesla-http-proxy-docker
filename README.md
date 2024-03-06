@@ -11,4 +11,10 @@ This docker runs the official Tesla HTTP Proxy to allow Fleet API requests on mo
 ## About
 Runs a temporary Flask web server to handle initial Tesla authorization flow and store the refresh token.  Once that is complete, it quits Flask and runs Tesla's HTTP Proxy code in Go.
 
-Setting this up is fairly complex.  Please read [DOCS.md](./tesla_http_proxy/DOCS.md) for details.
+Setting this up is fairly complex.  Please read [DOCS.md](./tesla_http_proxy/DOCS.md) for details (TODO), or follow the high level summary below:
+
+Clone the repository onto your host machine
+
+Build the docker image using the Dockerfile. Alternatively you can get the image directly from Dockerhub https://hub.docker.com/r/iainbullock/tesla_http_proxy
+
+Deploy the docker stack using docker-compose.yml
