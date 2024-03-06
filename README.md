@@ -13,7 +13,7 @@ Runs a temporary Flask web server to handle initial Tesla authorization flow and
 
 Setting this up is fairly complex.  Please read [DOCS.md](./tesla_http_proxy/DOCS.md) for details (TODO), or follow the high level summary below:
 
-## Installation and set up
+## Installation and set up - needs a tidy
 
  - Clone the repository onto your host machine, or just copy the files you need
 
