@@ -2,7 +2,7 @@
 set -e
 
 # read options
-cp -n /root/config.sh /data
+cp -n /app/config.sh /data
 . /data/config.sh
 
 # Exit if options not setup

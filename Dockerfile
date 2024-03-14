@@ -14,12 +14,8 @@ RUN apk add --no-cache \
 RUN mkdir -p /app/templates /data /share
 
 # Copy project files into required locations
-ADD https://raw.githubusercontent.com/iainbullock/tesla-http-proxy-docker/main/tesla_http_proxy/app/templates/callback.html /app/templates
-ADD https://raw.githubusercontent.com/iainbullock/tesla-http-proxy-docker/main/tesla_http_proxy/app/templates/index.html /app/templates
-ADD https://raw.githubusercontent.com/iainbullock/tesla-http-proxy-docker/main/tesla_http_proxy/app/run.py /app
-ADD https://raw.githubusercontent.com/iainbullock/tesla-http-proxy-docker/main/tesla_http_proxy/app/run.sh /app
-ADD https://raw.githubusercontent.com/iainbullock/tesla-http-proxy-docker/main/tesla_http_proxy/app/config.sh /root
-RUN chmod go+x /app/run.sh && chmod go+r /app/templates/* && chmod 0700 /root/config.sh
+COPY tesla_http_proxy/app /app
+RUN chmod go+x /app/run.sh && chmod go+r /app/templates/* && chmod 0700 /app/config.sh
 
 # install Tesla Go packages
 ADD https://github.com/teslamotors/vehicle-command/archive/refs/heads/main.zip /tmp
@@ -40,4 +36,3 @@ RUN rm -fr /app/vehicle-command-main /tmp/main.zip
 
 # Python 3 HTTP Server serves the current working dir
 WORKDIR /app
-
