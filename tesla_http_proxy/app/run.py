@@ -82,16 +82,15 @@ def callback():
         timeout=30,
     )
 
-    logger.info(
-        "Info to enter into Tesla Custom component:\n "
-        "Refresh token  : {BLUE}%s{RESET}\n "
-        "Proxy URL      : {BLUE}https://%s:4430{RESET}\n "
-        "SSL certificate: {BLUE}/share/tesla/selfsigned.pem{RESET}\n "
-        "Client ID      : {BLUE}%s\n{RESET}",
-        req.json()["refresh_token"],
-        PROXY_HOST,
-        CLIENT_ID,
+    output = (
+        "Info to enter into Tesla Custom component:\n"
+        f"Refresh token  : {BLUE}{req.json()['refresh_token']}{RESET}\n"
+        f"Proxy URL      : {BLUE}https://{PROXY_HOST}:4430{RESET}\n"
+        f"SSL certificate: {BLUE}/share/tesla/selfsigned.pem{RESET}\n"
+        f"Client ID      : {BLUE}{CLIENT_ID}{RESET}\n"
     )
+
+    logger.info(output)
 
     req.raise_for_status()
     with open("/data/refresh_token", "w", encoding="utf-8") as f:
