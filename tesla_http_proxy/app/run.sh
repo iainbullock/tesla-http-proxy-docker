@@ -32,7 +32,7 @@ generate_keypair() {
 
   # Generate keypair
   echo "Generating keypair"
-  /root/go/bin/tesla-keygen -f -keyring-type pass -key-name myself create >/share/com.tesla.3p.public-key.pem
+  tesla-keygen -f -keyring-type pass -key-name myself create >/share/com.tesla.3p.public-key.pem
   cat /share/com.tesla.3p.public-key.pem
 }
 
@@ -66,4 +66,4 @@ if ! [ -f /data/access_token ]; then
 fi
 
 echo "Starting Tesla HTTP Proxy"
-/root/go/bin/tesla-http-proxy -keyring-debug -keyring-type pass -key-name myself -cert /data/cert.pem -tls-key /data/key.pem -port 443 -host 0.0.0.0 -verbose
+tesla-http-proxy -keyring-debug -keyring-type pass -key-name myself -cert /data/cert.pem -tls-key /data/key.pem -port 443 -host 0.0.0.0 -verbose
