@@ -28,15 +28,14 @@ services:
 
     volumes:
       - tesla_http_proxy:/data
-      # This is the webserver root for the $DOMAIN virtual server. Change the path according to your webserver setup
+      # This is the webserver root for the $DOMAIN virtual server. Change the path according to your webserver setup, or delete it and copy the file manually
       - type: bind
-        #source: /usr/share/nginx/tesla_http_proxy
-        source: /home/docker/volumes/nginx/_data/tesla_http_proxy
+        source: /var/lib/docker/volumes/nginx/_data/tesla_http_proxy
         target: /share
       
     network_mode: bridge
     ports:
-      - 4430:443
+      - ${PROXY_PORT}:443
       - 8099:8099 
 
     restart: no
