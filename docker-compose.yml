@@ -3,7 +3,7 @@ version: '3'
 volumes:
   tesla_http_proxy:
     external: true
-  nginx:            # Docker volume for already existing webserver roots. Change according to your webserver setup
+  nginx:            # Docker volume for already existing webserver root. Change according to your webserver setup
     external: true
 
 services:   
@@ -16,7 +16,8 @@ services:
       - CLIENT_ID=client_id
       - CLIENT_SECRET=client_secret
       - DOMAIN=tesla.example.com # Public FQDN 
-      - PROXY_HOST=192.168.0.2 # Local hostname or IP of this docker host
+      - PROXY_HOST=192.168.0.2 # Local hostname of this docker host. IP addresses don't work
+      - PROXY_PORT=4430 # Change if required for your setup
       - REGION='Europe, Middle East, Africa' # Change to match your region
       
     stdin_open: true
