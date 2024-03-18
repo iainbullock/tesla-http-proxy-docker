@@ -57,6 +57,7 @@ elif [ -f /share/com.tesla.3p.public-key.pem ] && [ -f /share/selfsigned.pem ]; 
     generate_keypair
   fi
 else
+  echo "Public keys com.tesla.3p.public-key.pem or selfsigned.pem missing from /share"
   generate_keypair
 fi
 
