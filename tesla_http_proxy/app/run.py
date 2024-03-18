@@ -86,7 +86,7 @@ def callback():
         "Info to enter into Tesla Custom component:\n"
         f"Refresh token  : {BLUE}{req.json()['refresh_token']}{RESET}\n"
         f"Proxy URL      : {BLUE}https://{PROXY_HOST}:4430{RESET}\n"
-        f"SSL certificate: {BLUE}/share/tesla/selfsigned.pem{RESET}\n"
+        f"SSL certificate: {BLUE}/share/home-assistant/selfsigned.pem{RESET}\n"
         f"Client ID      : {BLUE}{CLIENT_ID}{RESET}\n"
     )
 

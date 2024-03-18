@@ -28,12 +28,14 @@ generate_keypair() {
     -keyout /data/key.pem -out /data/cert.pem -sha256 -days 3650 \
     -addext "extendedKeyUsage = serverAuth" \
     -addext "keyUsage = digitalSignature, keyCertSign, keyAgreement"
-  cp /data/cert.pem /share/selfsigned.pem
+  mkdir -p /share/home-assistant
+  cp /data/cert.pem /share/home-assistant/selfsigned.pem
 
   # Generate keypair
   echo "Generating keypair"
-  tesla-keygen -f -keyring-type pass -key-name myself create >/share/com.tesla.3p.public-key.pem
-  cat /share/com.tesla.3p.public-key.pem
+  mkdir -p /share/nginx
+  tesla-keygen -f -keyring-type pass -key-name myself create >/share/nginx/com.tesla.3p.public-key.pem
+  cat /share/nginx/com.tesla.3p.public-key.pem
 }
 
 # run on first launch only
