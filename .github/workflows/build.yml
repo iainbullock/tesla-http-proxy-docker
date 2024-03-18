@@ -1,8 +1,7 @@
 name: Build container image
 
 on:
-  release:
-    types: [published]
+  push:
     branches:
       - main
 
@@ -49,4 +48,4 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:latest
             ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ github.sha }}
             docker.io/iainbullock/tesla_http_proxy:latest
-            docker.io/iainbullock/tesla_http_proxy:${{ github.ref }}
+            docker.io/iainbullock/tesla_http_proxy:${{ github.sha }}
