@@ -2,11 +2,9 @@
 
 Now tested and working as expected with Home Assistant custom integration https://github.com/alandtse/tesla
 
-I need to update the installation instructions slightly and tidy various things up. Raise an issue if you need support regarding setup of the proxy
-
 Originally this was a fork of https://github.com/llamafilm/tesla-http-proxy-addon. All credit to llamafilm (https://github.com/llamafilm) for developing most of this. 
 
-Provides a standalone docker version instead of a Home Assistant Add-on. This means it can work with versions of Home Assistant which don't allow Add-Ons (e.g. docker version).
+This version provides a standalone docker version instead of a Home Assistant Add-on. This means it can work with versions of Home Assistant which don't allow Add-Ons (e.g. docker version).
 
 This docker runs the official Tesla HTTP Proxy to allow Fleet API requests on modern vehicles. Please do not bother Tesla for support on this.
 
@@ -25,7 +23,7 @@ Setting this up is fairly complex.  Please read [DOCS.md](./tesla_http_proxy/DOC
 
  - Make any required changes required to suit your setup in docker-compose.yml, and deploy the stack. On the first run of the container various files will be initialised and the container will exit
 
- - Enter your configuration parameters in /data/config.sh (/data is mounted as a volume on the docker host). This will override those specified in docker-compose.yml. Change OPTIONS_COMPLETE=0 to OPTIONS_COMPLETE=1 in /data/config.sh when the configuration parameters have been entered 
+ - Enter your configuration parameters in /data/config.sh (/data is mounted as a volume on the docker host). This will override those specified in docker-compose.yml. Note that PROXY_HOST must not be an IP address; it must be a hostname which resolves to the IP address of your docker host in both HA and proxy containers. Change OPTIONS_COMPLETE=0 to OPTIONS_COMPLETE=1 in /data/config.sh when the configuration parameters have been entered 
  
  - Start the container again. Further configuration will occur, and the Flask service will start to handle the creation of the vehicle keypair with Tesla and installing the key into your vehicle
 
@@ -39,5 +37,17 @@ Setting this up is fairly complex.  Please read [DOCS.md](./tesla_http_proxy/DOC
 
  - Return to the 'Tesla HTTP Proxy setup' page. Click 'Shutdown Flask Server'. This will do as it says. From now on the proxy server will continue to run in the docker contianer and listen for requests
 
- - Test using curl. Setup Home Assistant to work with the proxy. Note the API access_token will expire after approx 8 hours if not refreshed. Setup Home Assistant to ensure the token is refreshed automatically. See [DOCS.md](./tesla_http_proxy/DOCS.md) for details (TODO)
+ - Test using curl. See [DOCS.md](./tesla_http_proxy/DOCS.md) for details (TODO)
+
+ ## Setup Home Assistant Custom Integration ##
+ 
+ - Install using HACS. Start the config flow. 
+
+ - On the 'Tesla - Configuration dialog, click 'Use Fleet API Proxy'
+
+ - On the 'Tesla - Configuration' dialog, enter the email address associated with your Tesla Developer account. Obtain the refresh token from /data/refresh_token and enter into the 'Refresh Token' field. Note refresh tokens only work once and only last a short time before they expire. See the [DOCS.md](./tesla_http_proxy/DOCS.md) for details of how to get a new one (TODO). Enter the hostname and port for your proxy in URL format (in my case this is https://macmini.home:4430. It cannot be an IP address). Enter /config/tesla_http_proxy/selfsigned.pem into the 'Proxy SSL certificate' field.
+
+ - If the initialisation is successful, you will be presented with a 'Success!' dialog, with your name of your vehicle shown. Click the 'Finish' button and the entities for your vehicle will have been created. If the integration fails to setup, the most likely issues are: your refresh token has expired; or the SSL certificate that HA uses to connect to the proxy is invalid (e.g. you used an IP rather than hostname, the hostname doesn't resolve to the IP address of your docker host in both HA and proxy containers)
+
+ - Test the integration, in particular by issuing a command e.g. to open the boot. If that fails, most likely culprit is that your webserver is not serving your vehicle's public key (com.tesla.3p.public-key.pem) to Tesla which is required for commands to work
    
