@@ -2,11 +2,9 @@
 
 Now tested and working as expected with Home Assistant custom integration https://github.com/alandtse/tesla
 
-I need to update the installation instructions slightly and tidy various things up. Raise an issue if you need support regarding setup of the proxy
-
 Originally this was a fork of https://github.com/llamafilm/tesla-http-proxy-addon. All credit to llamafilm (https://github.com/llamafilm) for developing most of this. 
 
-Provides a standalone docker version instead of a Home Assistant Add-on. This means it can work with versions of Home Assistant which don't allow Add-Ons (e.g. docker version).
+This version provides a standalone docker version instead of a Home Assistant Add-on. This means it can work with versions of Home Assistant which don't allow Add-Ons (e.g. docker version).
 
 This docker runs the official Tesla HTTP Proxy to allow Fleet API requests on modern vehicles. Please do not bother Tesla for support on this.
 
