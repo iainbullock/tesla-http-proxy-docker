@@ -28,11 +28,11 @@ services:
       # Webserver root for the $DOMAIN virtual server. Change the path according to your webserver setup. Path must exist or this container won't start
       - type: bind
         source: /var/lib/docker/volumes/nginx/_data/tesla_http_proxy
-        target: /share
+        target: /share/nginx
       # Path to tesla_http_proxy directory inside /config on Home Assistant instance. Change according to your HA setup. Path must exist or this container won't start
       - type: bind
         source: /var/lib/docker/volumes/home-assistant/_data/tesla_http_proxy
-        target: /share
+        target: /share/home-assistant
         
     network_mode: bridge
     ports:
