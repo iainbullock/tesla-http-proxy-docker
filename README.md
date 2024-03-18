@@ -37,7 +37,9 @@ Setting this up is fairly complex.  Please read [DOCS.md](./tesla_http_proxy/DOC
 
  - Return to the 'Tesla HTTP Proxy setup' page. Click 'Shutdown Flask Server'. This will do as it says. From now on the proxy server will continue to run in the docker contianer and listen for requests
 
- - Test using curl. See [DOCS.md](./tesla_http_proxy/DOCS.md) for details (TODO)
+ - Optionally test using curl. See [DOCS.md](./tesla_http_proxy/DOCS.md) for details (TODO)
+
+ - Once you are happy it is working, change restart: no to restart: unless-stopped in your docker-compose.yml, and restart the stack
 
  ## Setup Home Assistant Custom Integration ##
  
