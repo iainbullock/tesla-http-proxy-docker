@@ -1,7 +1,8 @@
 name: Build container image
 
 on:
-  push:
+  release:
+    types: [created, published]
     branches:
       - main
 
