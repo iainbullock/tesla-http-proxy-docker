@@ -49,7 +49,7 @@ if ! pass >/dev/null 2>&1; then
   generate_keypair
 
 # verify certificate is not from previous install
-elif [ -f /share/com.tesla.3p.public-key.pem ] && [ -f /share/selfsigned.pem ]; then
+elif [ -f /share/nginx/com.tesla.3p.public-key.pem ] && [ -f /share/home-assistant/selfsigned.pem ]; then
   certPubKey="$(openssl x509 -noout -pubkey -in /share/selfsigned.pem)"
   keyPubKey="$(openssl pkey -pubout -in /data/key.pem)"
   if [ "${certPubKey}" == "${keyPubKey}" ]; then
