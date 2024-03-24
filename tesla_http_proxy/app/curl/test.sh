@@ -1,7 +1,7 @@
 #!/bin/bash
-TESLA_AUTH_TOKEN=XXXXXXXX
-VIN=xxxxxxxxxxxxxxxxx
+#export TESLA_AUTH_TOKEN=XXXXXXXX
+#export VIN=xxxxxxxxxxxxxxxxx
 
-curl --cacert cert.pem \
+curl --cacert ../cert.pem \
     --header "Authorization: Bearer $TESLA_AUTH_TOKEN" \
-    "https://macmini.home:4430/api/1/vehicles"
+    "https://$PROXY_HOST:4430/api/1/vehicles"
