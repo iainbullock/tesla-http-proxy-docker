@@ -10,11 +10,11 @@ services:
     image: "iainbullock/tesla_http_proxy:latest"
  
     environment:
-      - TZ=Europe/London
-      - CLIENT_ID=client_id
-      - CLIENT_SECRET=client_secret
-      - DOMAIN=tesla.example.com # Public FQDN 
-      - PROXY_HOST=192.168.0.2 # Local hostname (not IP) of this docker host
+      - TZ='Europe/London'
+      - CLIENT_ID='client_id'
+      - CLIENT_SECRET='client_secret'
+      - DOMAIN='tesla.example.com' # Public FQDN 
+      - PROXY_HOST='hostname.local' # Local hostname (not IP) of this docker host
       - REGION='Europe, Middle East, Africa' # Change to match your region
       
     stdin_open: true
