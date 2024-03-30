@@ -65,7 +65,7 @@ fi
 
 if ! [ -f /data/access_token ]; then
   echo "Starting temporary Python app for authentication flow. Delete /data/access_token to force regeneration in the future"
-  python3 /app/run.py
+  python3 /app/run.py --client-id "$CLIENT_ID" --client-secret "$CLIENT_SECRET" --domain "$DOMAIN" --region "$REGION" --proxy-host "$PROXY_HOST"
 fi
 
 echo "Starting Tesla HTTP Proxy"
