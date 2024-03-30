@@ -18,7 +18,7 @@ echo DOMAIN=$DOMAIN
 echo PROXY_HOST=$PROXY_HOST
 echo REGION=$REGION
 
-generate_keypair() {
+generate_ssl_certs() {
   # generate self signed SSL certificate
   echo "Generating self-signed SSL certificate"
   openssl req -x509 -nodes -newkey ec \
@@ -30,7 +30,9 @@ generate_keypair() {
     -addext "keyUsage = digitalSignature, keyCertSign, keyAgreement"
   mkdir -p /share/home-assistant
   cp /data/cert.pem /share/home-assistant/selfsigned.pem
+}
 
+generate_tesla_keypair() {
   # Generate keypair
   echo "Generating keypair"
   mkdir -p /share/nginx
@@ -46,21 +48,26 @@ if ! pass >/dev/null 2>&1; then
   gpg --batch --passphrase '' --quick-gen-key myself default default
   gpg --list-keys
   pass init myself
-  generate_keypair
+  generate_tesla_keypair
 
-# verify certificate is not from previous install
-elif [ -f /share/nginx/com.tesla.3p.public-key.pem ] && [ -f /share/home-assistant/selfsigned.pem ]; then
+# verify certificate exists
+elif [ ! -f /share/nginx/com.tesla.3p.public-key.pem ]; then
+  echo "Public key com.tesla.3p.public-key.pem missing from /share"
+  generate_tesla_keypair
+fi
+
+if [ -f /share/home-assistant/selfsigned.pem ]; then
   certPubKey="$(openssl x509 -noout -pubkey -in /share/home-assistant/selfsigned.pem)"
   keyPubKey="$(openssl pkey -pubout -in /data/key.pem)"
   if [ "${certPubKey}" == "${keyPubKey}" ]; then
     echo "Found existing keypair"
   else
     echo "Existing certificate is invalid"
-    generate_keypair
+    generate_ssl_certs
   fi
 else
-  echo "Public keys com.tesla.3p.public-key.pem or selfsigned.pem missing from /share"
-  generate_keypair
+  echo "SSL certificate does not exist"
+  generate_ssl_certs
 fi
 
 if ! [ -f /data/access_token ]; then
