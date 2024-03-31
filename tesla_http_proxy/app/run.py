@@ -1,8 +1,10 @@
 import os
+import sys
 import uuid
 import logging
+import argparse
 import requests
-from flask import Flask, request, render_template, cli
+from flask import Flask, request, render_template, cli, redirect
 from werkzeug.exceptions import HTTPException
 
 logging.basicConfig(
@@ -14,20 +16,55 @@ logger = logging.getLogger("main")
 
 app = Flask(__name__)
 
-CLIENT_ID = os.environ["CLIENT_ID"]
-CLIENT_SECRET = os.environ["CLIENT_SECRET"]
-DOMAIN = os.environ["DOMAIN"]
-REGION = os.environ["REGION"]
-PROXY_HOST = os.environ["PROXY_HOST"]
 SCOPES = "openid offline_access vehicle_device_data vehicle_cmds vehicle_charging_cmds"
-AUDIENCE = {
+AUDIENCES = {
     "North America, Asia-Pacific": "https://fleet-api.prd.na.vn.cloud.tesla.com",
     "Europe, Middle East, Africa": "https://fleet-api.prd.eu.vn.cloud.tesla.com",
     "China": "https://fleet-api.prd.cn.vn.cloud.tesla.cn",
-}[REGION]
-
+}
 BLUE = "\u001b[34m"
 RESET = "\x1b[0m"
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument(
+    "--client-id",
+    help="Client ID. Required if not provided in environment variable CLIENT_ID",
+    default=os.environ.get("CLIENT_ID"),
+)
+parser.add_argument(
+    "--client-secret",
+    help="Client secret. Required if not provided in environment variable CLIENT_SECRET",
+    default=os.environ.get("CLIENT_SECRET"),
+)
+parser.add_argument(
+    "--domain",
+    help="Domain. Required if not provided in environment variable DOMAIN",
+    default=os.environ.get("DOMAIN"),
+)
+parser.add_argument(
+    "--region",
+    choices=AUDIENCES.keys(),
+    help="Region. Required if not provided in environment variable REGION",
+    default=os.environ.get("REGION"),
+)
+parser.add_argument(
+    "--proxy-host",
+    help="Proxy host. Required if not provided in environment variable PROXY_HOST",
+    default=os.environ.get("PROXY_HOST"),
+)
+
+args = parser.parse_args()
+
+if (
+    not args.client_id
+    or not args.client_secret
+    or not args.domain
+    or not args.region
+    or not args.proxy_host
+):
+    parser.print_help()
+    sys.exit(1)
 
 
 @app.errorhandler(Exception)
@@ -47,8 +84,8 @@ def index():
     """Web UI"""
     return render_template(
         "index.html",
-        domain=DOMAIN,
-        client_id=CLIENT_ID,
+        domain=args.domain,
+        client_id=args.client_id,
         scopes=SCOPES,
         randomstate=uuid.uuid4().hex,
         randomnonce=uuid.uuid4().hex,
@@ -73,11 +110,11 @@ def callback():
         headers={"Content-Type": "application/x-www-form-urlencoded"},
         data={
             "grant_type": "authorization_code",
-            "client_id": CLIENT_ID,
-            "client_secret": CLIENT_SECRET,
+            "client_id": args.client_id,
+            "client_secret": args.client_secret,
             "code": code,
-            "audience": AUDIENCE,
-            "redirect_uri": f"https://{DOMAIN}/callback",
+            "audience": AUDIENCES[args.region],
+            "redirect_uri": f"https://{args.domain}/callback",
         },
         timeout=30,
     )
@@ -85,9 +122,9 @@ def callback():
     output = (
         "Info to enter into Tesla Custom component:\n"
         f"Refresh token  : {BLUE}{req.json()['refresh_token']}{RESET}\n"
-        f"Proxy URL      : {BLUE}https://{PROXY_HOST}:4430{RESET}\n"
+        f"Proxy URL      : {BLUE}https://{args.proxy_host}:4430{RESET}\n"
         f"SSL certificate: {BLUE}/share/home-assistant/selfsigned.pem{RESET}\n"
-        f"Client ID      : {BLUE}{CLIENT_ID}{RESET}\n"
+        f"Client ID      : {BLUE}{args.client_id}{RESET}\n"
     )
 
     logger.info(output)
@@ -107,8 +144,10 @@ def shutdown():
     os._exit(0)
 
 
-def _main() -> int:
-    # generate partner authentication token
+@app.route("/register-partner-account")
+def register_partner_account():
+    """Register the partner account with Tesla API to enable API access"""
+
     logger.info("*** Generating Partner Authentication Token ***")
 
     req = requests.post(
@@ -116,42 +155,40 @@ def _main() -> int:
         headers={"Content-Type": "application/x-www-form-urlencoded"},
         data={
             "grant_type": "client_credentials",
-            "client_id": CLIENT_ID,
-            "client_secret": CLIENT_SECRET,
+            "client_id": args.client_id,
+            "client_secret": args.client_secret,
             "scope": SCOPES,
-            "audience": AUDIENCE,
+            "audience": AUDIENCES[args.region],
         },
         timeout=30,
     )
     if req.status_code >= 400:
         logger.error("HTTP %s: %s", req.status_code, req.reason)
-        return req.status_code
+        return redirect(f"/?error={req.status_code}", code=302)
+
     logger.info(req.text)
     tesla_api_token = req.json()["access_token"]
 
     # register Tesla account to enable API access
     logger.info("*** Registering Tesla account ***")
     req = requests.post(
-        f"{AUDIENCE}/api/1/partner_accounts",
+        f"{AUDIENCES[args.region]}/api/1/partner_accounts",
         headers={
             "Authorization": "Bearer " + tesla_api_token,
             "Content-Type": "application/json",
         },
-        data='{"domain": "%s"}' % DOMAIN,
+        data='{"domain": "%s"}' % args.domain,
         timeout=30,
     )
     if req.status_code >= 400:
         logger.error("Error %s: %s", req.status_code, req.reason)
-        return req.status_code
+        return redirect(f"/?error={req.status_code}", code=302)
     logger.info(req.text)
-    return 0
+
+    return redirect("/?success=1", code=302)
 
 
 if __name__ == "__main__":
-    retval = _main()
-    if retval:
-        os._exit(retval)
-
     logger.info("*** Starting Flask server... ***")
     cli.show_server_banner = lambda *_: None
     app.run(port=8099, debug=False, host="0.0.0.0")
