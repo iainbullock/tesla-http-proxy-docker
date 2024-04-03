@@ -1,5 +1,7 @@
 # Tesla HTTP Proxy Docker
 
+** Pleae use release version v1.0.3 until I can investigate a problem reported with v1.0.4 (https://github.com/iainbullock/tesla-http-proxy-docker/issues/19). Dockerhub 'latest' tag withdrawn until next release **
+
 Now tested and working as expected with Home Assistant custom integration https://github.com/alandtse/tesla
 
 Originally this was a fork of https://github.com/llamafilm/tesla-http-proxy-addon. All credit to llamafilm (https://github.com/llamafilm) for developing most of this. 
