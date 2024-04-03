@@ -5,6 +5,7 @@ on:
     types: published
     branches:
       - main
+      - dev
 
 permissions:
   contents: read
