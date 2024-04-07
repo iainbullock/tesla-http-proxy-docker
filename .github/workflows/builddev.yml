@@ -2,9 +2,7 @@ name: Build container image
 
 on:
   release:
-    types: published
-    branches:
-      - dev
+    types: prereleased
 
 permissions:
   contents: read
