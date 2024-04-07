@@ -27,13 +27,15 @@ Setting this up is fairly complex.  Please read [DOCS.md](./tesla_http_proxy/DOC
  
  - Start the container again. Further configuration will occur, and the Flask service will start to handle the creation of the vehicle keypair with Tesla and installing the key into your vehicle
 
- - Enter the URL of your FQDN into a web browser. A page titled 'Tesla HTTP Proxy setup' will appear. Click the 'Generate OAuth token' button. This will open another web page inviting you to login into to Tesla. You will then be offered to allow the application to access your Tesla account. Click all the check boxes and press the Allow button
+ - Enter the URL of your FQDN into a web browser. A page titled 'Tesla HTTP Proxy setup' will appear. Click the '1. Generate OAuth token' button. This will open another web page inviting you to login into to Tesla. You will then be offered to allow the application to access your Tesla account. Click all the check boxes and press the Allow button
 
- - The callback will then occur which if successful will display a page saying 'Authorization complete'. Click the 'You can now close this browser instance' button
+ - The callback will then occur which if successful will display a page saying 'Authorization complete'. The has generated a public/private key pair for Tesla Vehicle Commands, and the initial Access and Refresh tokens for the API access. Click the 'You can now close this browser instance' button
 
- - Return to the 'Tesla HTTP Proxy setup' page. Click the 'Enroll public key in your vehicle' button. Another Tesla web page will appear inviting you to set up a third party virtual key. There is a QR code which you should scan with your phone (which already has the Tesla App installed and setup for your Tesla account). Approve the key in the Tesla app, which if successful will install it into your vehicle. You can close this webpage
+ - Return to the 'Tesla HTTP Proxy setup' page. Click the '2. Test public key endpoint' button. This will download the public key (com.tesla.3p.public-key.pem). You don't need to keep the downloaded key. You must keep this accessible to the internet or Tesla will reject your commands made through the proxy. You may have to manually copy the public key to a suitable location in the document root on your webserver. Make sure this test works before proceeding
 
- - Return to the 'Tesla HTTP Proxy setup' page. Click the 'Test public key endpoint' button. This will download the public key (the private key was installed into you car). You don't need it, but you must keep this accessible to the internet or Tesla will reject your commands made through the proxy
+ - Return to the 'Tesla HTTP Proxy setup' page. Click the '3. Register Partner account' button. This generates the Partner Authentication token, and registers the account for API access
+
+ -  Return to the 'Tesla HTTP Proxy setup' page. Click the '4. Enroll private key in your vehicle' button. Another Tesla web page will appear inviting you to set up a third party virtual key. There is a QR code which you should scan with your phone (which already has the Tesla App installed and setup for your Tesla account). Approve the key in the Tesla app, which if successful will install it into your vehicle. You can close this webpage
 
  - Return to the 'Tesla HTTP Proxy setup' page. Click 'Shutdown Flask Server'. This will do as it says. From now on the proxy server will continue to run in the docker contianer and listen for requests
 
