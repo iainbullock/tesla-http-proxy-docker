@@ -42,7 +42,7 @@ Setting this up is fairly complex.  Please read [DOCS.md](./tesla_http_proxy/DOC
 [16:14:05] werkzeug:INFO: 192.168.1.5 - - [07/Apr/2024 16:14:05] "GET /register-partner-account HTTP/1.0" 302 -
 [16:14:05] werkzeug:INFO: 192.168.1.5 - - [07/Apr/2024 16:14:05] "GET /?success=1 HTTP/1.0" 200 -
 
- -  Return to the 'Tesla HTTP Proxy setup' page. Click the '4. Enrol private key in your vehicle' button. Another Tesla web page will appear inviting you to set up a third party virtual key. There is a QR code which you should scan with your phone (which already has the Tesla App installed and setup for your Tesla account). Approve the key in the Tesla app, which if successful will install it into your vehicle. You can close this webpage
+ -  Return to the 'Tesla HTTP Proxy setup' page. Click the '4. Enrol private key into your vehicle' button. Another Tesla web page will appear inviting you to set up a third party virtual key. There is a QR code which you should scan with your phone (which already has the Tesla App installed and setup for your Tesla account). Approve the key in the Tesla app, which if successful will install it into your vehicle. You can close this webpage
 
  - Return to the 'Tesla HTTP Proxy setup' page. Click 'Shutdown Flask Server'. This will do as it says. From now on the proxy server will continue to run in the docker contianer and listen for requests
 
