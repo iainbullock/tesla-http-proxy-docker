@@ -56,7 +56,7 @@ elif [ ! -f /share/nginx/com.tesla.3p.public-key.pem ]; then
   generate_tesla_keypair
 fi
 
-if [ -f /share/home-assistant/selfsigned.pem ]; then
+if [ -f /share/home-assistant/selfsigned.pem ] && [ -f /data/key.pem ]; then
   certPubKey="$(openssl x509 -noout -pubkey -in /share/home-assistant/selfsigned.pem)"
   keyPubKey="$(openssl pkey -pubout -in /data/key.pem)"
   if [ "${certPubKey}" == "${keyPubKey}" ]; then
