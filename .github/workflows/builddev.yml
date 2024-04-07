@@ -2,7 +2,7 @@ name: Build container image
 
 on:
   release:
-    types: prereleased
+    types: [prereleased]
 
 permissions:
   contents: read
