@@ -15,7 +15,7 @@ services:
       - CLIENT_SECRET='client_secret'
       - DOMAIN='tesla.example.com' # Public FQDN 
       - PROXY_HOST='hostname.local' # Local hostname (not IP) of this docker host
-      - REGION='Europe, Middle East, Africa' # Change to match your region
+      - REGION='Europe, Middle East, Africa' # Change to match your region. Other options are 'North America, Asia-Pacific' or 'China'
       
     stdin_open: true
     tty: true         
@@ -25,11 +25,13 @@ services:
 
     volumes:
       - tesla_http_proxy:/data
-      # Webserver root for the $DOMAIN virtual server. Change the path according to your webserver setup. Path must exist or this container won't start
+      # Webserver root for the $DOMAIN virtual server. Change the source path according to your webserver setup. 
+      # Path must exist or this container won't start. Do not change the target path
       - type: bind
         source: /var/lib/docker/volumes/nginx/_data/tesla_http_proxy
         target: /share/nginx
-      # Path to tesla_http_proxy directory inside /config on Home Assistant instance. Change according to your HA setup. Path must exist or this container won't start
+      # Path to tesla_http_proxy directory inside /config on Home Assistant instance. Change the source path according to your HA setup. 
+      # Path must exist or this container won't start. Do not change the target path
       - type: bind
         source: /var/lib/docker/volumes/home-assistant/_data/tesla_http_proxy
         target: /share/home-assistant
