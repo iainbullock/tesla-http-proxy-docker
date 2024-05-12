@@ -18,7 +18,8 @@ Setting this up is fairly complex.  Please read [DOCS.md](./tesla_http_proxy/DOC
 ## Installation and set up
 
 Many thanks to @tux43 for creating this blog, which describes his set up in detail: https://www.smartmotion.life/2024/04/23/tesla-custom-integration-with-home-assistant-on-docker
-Also many thanks to https://github.com/juchong for writing a Cloudflare configuration / setup guide: [CLOUDFLARE.md]./tesla_http_proxy/CLOUDFLARE.md
+
+Also many thanks to https://github.com/juchong for writing a Cloudflare configuration / setup guide: [CLOUDFLARE.md](./tesla_http_proxy/CLOUDFLARE.md)
 
  - Setup your webserver so it can receive ssl connections to your FQDN from the internet. This FQDN should be different to that used to access your instance of Home Assistant. I have provided my Nginx configuration file (nginx_tesla.conf). The default config for this project assumes you are running Nginx in its own docker container, and the webserver document root for the FQDN is at /var/lib/docker/volumes/nginx/_data/tesla_http_proxy on the docker host. This can be changed in docker-compose.yml
 
