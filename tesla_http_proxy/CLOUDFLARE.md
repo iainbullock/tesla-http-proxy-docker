@@ -30,12 +30,6 @@ This guide assumes the following:
 * Install the Nginx add-on from the Home Assistant add-on library
 * Set your domain (Example: someplace.com)
 * Select the "Cloudflare" option so Nginx adds Cloudflare's IPs to its config
-* In the "Customize" section, configure the following:
-```
-active: true
-default: nginx_proxy_default*.conf
-servers: nginx_proxy/*.conf
-```
 * Set your port to the one you configured in the Cloudflare Zero Trust control panel
 * Save and start Nginx
 
@@ -43,6 +37,15 @@ servers: nginx_proxy/*.conf
 * Install Tesla HTTP Proxy from the Home Assistant add-on library
 * Configure your Client ID, Client Secret, and FQDN (Example: tsla.someplace.com)
 * Save and start the add-on
+
+## Reconfigure the Nginx add-on
+* In the "Customize" section, configure the following:
+```
+active: true
+default: nginx_proxy_default*.conf
+servers: nginx_proxy/*.conf
+```
+* Save and restart the add-on
 
 ## Finishing Up
 Watch the Tesla HTTP Proxy logs. If everything was configured correctly, you should see "Starting Tesla HTTP Proxy" at the bottom of your logs. 
@@ -69,3 +72,6 @@ HTTP/2 200
 [18:05:39] INFO: Starting Tesla HTTP Proxy
 ```
 Proceed with the rest of the setup / configuration as per the standard configuration instructions.
+
+## Debugging
+If things don't seem to be working as expected, be sure to check the Cloudflared, Nginx, and Tesla HTTP Proxy logs for clues. 
