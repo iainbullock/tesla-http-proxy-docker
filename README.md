@@ -8,12 +8,16 @@ This version provides a standalone docker version instead of a Home Assistant Ad
 
 This docker runs the official Tesla HTTP Proxy to allow Fleet API requests on modern vehicles. Please do not bother Tesla for support on this.
 
+<a href="https://www.buymeacoffee.com/iainbullock" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
 ## About
 Runs a temporary Flask web server to handle initial Tesla authorization flow and store the refresh token.  Once that is complete, it quits Flask and runs Tesla's HTTP Proxy code in Go.
 
 Setting this up is fairly complex.  Please read [DOCS.md](./tesla_http_proxy/DOCS.md) for details (TODO), or follow the high level summary below:
 
 ## Installation and set up
+
+Many thanks to @tux43 for creating this blog, which describes his set up in detail: https://www.smartmotion.life/2024/04/23/tesla-custom-integration-with-home-assistant-on-docker
 
  - Setup your webserver so it can receive ssl connections to your FQDN from the internet. This FQDN should be different to that used to access your instance of Home Assistant. I have provided my Nginx configuration file (nginx_tesla.conf). The default config for this project assumes you are running Nginx in its own docker container, and the webserver document root for the FQDN is at /var/lib/docker/volumes/nginx/_data/tesla_http_proxy on the docker host. This can be changed in docker-compose.yml
 
