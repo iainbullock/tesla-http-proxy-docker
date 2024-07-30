@@ -164,6 +164,7 @@ def register_partner_account():
     )
     if req.status_code >= 400:
         logger.error("HTTP %s: %s", req.status_code, req.reason)
+        logger.error(req.text)
         return redirect(f"/?error={req.status_code}", code=302)
 
     logger.info(req.text)
@@ -182,6 +183,7 @@ def register_partner_account():
     )
     if req.status_code >= 400:
         logger.error("Error %s: %s", req.status_code, req.reason)
+        logger.error(req.text)
         return redirect(f"/?error={req.status_code}", code=302)
     logger.info(req.text)
 
