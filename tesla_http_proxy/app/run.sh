@@ -8,6 +8,7 @@ cp -n /app/config.sh /data
 # Exit if options not setup
 if [ $OPTIONS_COMPLETE != 1 ]; then
   echo "Configuration options not set in /data/config.sh, exiting"
+  echo "Change OPTIONS_COMPLETE=0 to OPTIONS_COMPLETE=1 in /data/config.sh when the configuration parameters have been set"
   exit 0
 fi
 
