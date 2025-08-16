@@ -1,4 +1,4 @@
-FROM golang:1.22-alpine3.18 as build
+FROM golang:1.25-alpine3.22 as build
 
 RUN apk add --no-cache \
   unzip
