@@ -106,7 +106,7 @@ def callback():
 
     # Exchange code for refresh_token
     req = requests.post(
-        "https://auth.tesla.com/oauth2/v3/token",
+        "https://fleet-auth.prd.vn.cloud.tesla.com/oauth2/v3/token",
         headers={"Content-Type": "application/x-www-form-urlencoded"},
         data={
             "grant_type": "authorization_code",
@@ -151,7 +151,7 @@ def register_partner_account():
     logger.info("*** Generating Partner Authentication Token ***")
 
     req = requests.post(
-        "https://auth.tesla.com/oauth2/v3/token",
+        "https://fleet-auth.prd.vn.cloud.tesla.com/oauth2/v3/token",
         headers={"Content-Type": "application/x-www-form-urlencoded"},
         data={
             "grant_type": "client_credentials",
